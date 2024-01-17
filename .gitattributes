@@ -1,0 +1,5 @@
+* test=auto
+
+*.sh text
+*.yaml text
+*.yml text
