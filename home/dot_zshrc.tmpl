@@ -114,6 +114,8 @@ export EDITOR=vim
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+{{ if not .is_devcontainer -}}
 . /opt/asdf-vm/asdf.sh
 eval "$(zellij setup --generate-auto-start zsh)"
 source /etc/profile.d/google-cloud-cli.sh
+{{- end }}

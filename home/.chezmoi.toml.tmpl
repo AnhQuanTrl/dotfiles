@@ -1,12 +1,12 @@
 # vim:ft=toml ts=4 sw=4 et:
+{{- $devcontainer := or (env "REMOTE_CONTAINERS") (env "CODESPACES") (env "VSCODE_REMOTE_CONTAINERS_SESSION") (env "GITPOD_HOST") (env "IS_DEVPOD") | not | not -}}
+{{- $interactive := stdinIsATTY -}}
 
-{{- $email := promptStringOnce . "email" "Git email address for the author/committer" }}
-{{- $name := promptStringOnce . "name" "Git username for the author/committer" }}
-
+sourceDir = {{ .chezmoi.sourceDir | quote }}
 
 [data]
-    email = {{ $email | quote }}
-    name = {{ $name | quote }}
+    name = "arthur"
+    is_devcontainer = {{ $devcontainer }}
 
 [edit]
     command = "nvim"
