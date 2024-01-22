@@ -1,4 +1,0 @@
-{{- if .is_devcontainer -}}
-.oh-my-zsh/completions/_chezmoi
-.oh-my-zsh/completions/_devpod
-{{- end -}}

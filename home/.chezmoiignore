@@ -3,4 +3,9 @@ README.md
 .oh-my-zsh/log/
 .oh-my-zsh/custom/themes/powerlevel10k/**/*.zwc
 
+{{ if .is_devcontainer -}}
+.oh-my-zsh/completions/_chezmoi
+.oh-my-zsh/completions/_devpod
+{{- end }}
+
 
