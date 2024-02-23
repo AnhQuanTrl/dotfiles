@@ -1,37 +1,5 @@
 local Util = require 'arthur.util'
 
----@param bufnr number
-local function register_lsp_keymaps(bufnr)
-  local nmap = function(keys, func, desc)
-    if desc then
-      desc = 'LSP: ' .. desc
-    end
-
-    vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
-  end
-
-  local nvmap = function(keys, func, desc)
-    if desc then
-      desc = 'LSP: ' .. desc
-    end
-
-    vim.keymap.set({ 'v', 'n' }, keys, func, { buffer = bufnr, desc = desc })
-  end
-
-  local imap = function(keys, func, desc)
-    if desc then
-      desc = 'LSP: ' .. desc
-    end
-
-    vim.keymap.set('i', keys, func, { buffer = bufnr, desc = desc })
-  end
-
-  -- Diagnostic keymaps
-  nmap('<leader>cd', vim.diagnostic.open_float, 'Diagnostic')
-  nmap(']d', vim.diagnostic.goto_next, 'Go to next diagnostic message')
-  nmap('[d', vim.diagnostic.goto_prev, 'Go to previous diagnostic message')
-end
-
 return {
   {
     'neovim/nvim-lspconfig',
@@ -59,7 +27,6 @@ return {
 
       -- Attach keymap when lsp attach
       Util.lsp.on_attach(function(client, buffer)
-        register_lsp_keymaps(buffer)
         require('arthur.plugins.lsp.util.keymaps').on_attach(client, buffer)
       end)
 
