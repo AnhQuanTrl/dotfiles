@@ -28,3 +28,15 @@
     exact = true
     stripComponents = 1
     refreshPeriod = "168h"
+# [".config/k9s/skins"]
+#     type = "archive"
+#     url = "https://github.com/catppuccin/k9s/archive/main.tar.gz"
+#     stripComponents = 1
+#     refreshPeriod = "168h"
+#     include = ["*/dist/**"]
+[".oh-my-zsh/custom/plugins/zsh-vi-mode"]
+    type = "archive"
+    url = "https://github.com/jeffreytse/zsh-vi-mode/archive/master.tar.gz"
+    exact = true
+    stripComponents = 1
+    refreshPeriod = "168h"

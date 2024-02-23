@@ -77,13 +77,13 @@ plugins=(
     git
     gcloud
     command-not-found
+    zsh-vi-mode
     zsh-autosuggestions
     zsh-syntax-highlighting
 )
 
-source $ZSH/oh-my-zsh.sh
-
 fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
+source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
