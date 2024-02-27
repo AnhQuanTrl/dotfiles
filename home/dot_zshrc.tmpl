@@ -120,3 +120,6 @@ export EDITOR=vim
 eval "$(zellij setup --generate-auto-start zsh)"
 source /etc/profile.d/google-cloud-cli.sh
 {{- end }}
+{{ if .is_wsl -}}
+export BROWSER=wslview
+{{- end }}

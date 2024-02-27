@@ -1,12 +1,13 @@
 # vim:ft=toml ts=4 sw=4 et:
 {{- $devcontainer := or (env "REMOTE_CONTAINERS") (env "CODESPACES") (env "VSCODE_REMOTE_CONTAINERS_SESSION") (env "GITPOD_HOST") (env "IS_DEVPOD") | not | not -}}
 {{- $interactive := stdinIsATTY -}}
+{{- $wsl := and (eq .chezmoi.os "linux") (.chezmoi.kernel.osrelease | lower | contains "microsoft") | not | not -}}
 
 sourceDir = {{ .chezmoi.sourceDir | quote }}
 
 [data]
     name = "arthur"
     is_devcontainer = {{ $devcontainer }}
-
+    is_wsl = {{ $wsl }}
 [edit]
     command = "nvim"
