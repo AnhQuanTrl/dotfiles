@@ -100,7 +100,7 @@ function M.resolve(buffer)
   return Keys.resolve(spec)
 end
 
-function M.on_attach(_, buffer)
+function M.on_attach(buffer)
   local Keys = require 'lazy.core.handler.keys'
   local keymaps = M.resolve(buffer)
 

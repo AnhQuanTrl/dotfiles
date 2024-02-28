@@ -8,7 +8,7 @@ return {
     'windwp/nvim-ts-autotag',
   },
   opts = {
-    ensure_installed = { 'lua', 'vimdoc', 'vim', 'yaml', 'proto', 'kdl', 'yuck' },
+    ensure_installed = { 'lua', 'vimdoc', 'vim', 'yaml', 'proto', 'kdl', 'yuck', 'regex' },
     auto_install = false,
 
     highlight = { enable = true },

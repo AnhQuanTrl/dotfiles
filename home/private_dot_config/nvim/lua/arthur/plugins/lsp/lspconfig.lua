@@ -27,7 +27,7 @@ return {
 
       -- Attach keymap when lsp attach
       Util.lsp.on_attach(function(client, buffer)
-        require('arthur.plugins.lsp.util.keymaps').on_attach(client, buffer)
+        require('arthur.plugins.lsp.util.keymaps').on_attach(buffer)
       end)
 
       -- For dynamic capabilities
@@ -35,7 +35,7 @@ return {
       vim.lsp.handlers['client/registerCapability'] = function(err, res, ctx)
         local ret = register_capability(err, res, ctx)
         local buffer = vim.api.nvim_get_current_buf()
-        register_lsp_keymaps(buffer)
+        require('arthur.plugins.lsp.util.keymaps').on_attach(buffer)
         return ret
       end
 
