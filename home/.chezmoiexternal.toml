@@ -1,3 +1,4 @@
+# vim: ts=4:sw=4:et:
 [".oh-my-zsh"]
     type = "archive"
     url = "https://github.com/ohmyzsh/ohmyzsh/archive/master.tar.gz"
@@ -40,3 +41,10 @@
     exact = true
     stripComponents = 1
     refreshPeriod = "168h"
+[".config/gitui"]
+    type = "archive"
+    url = "https://github.com/catppuccin/gitui/archive/master.tar.gz"
+    exact = true
+    stripComponents = 2
+    refreshPeriod = "168h"
+    include = ["*/theme/**"]
