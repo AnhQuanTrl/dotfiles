@@ -49,8 +49,5 @@ return {
     local telescope = require 'telescope'
     telescope.setup(opts)
     telescope.load_extension 'fzf'
-    if Util.has 'yaml-companion' then
-      telescope.load_extension 'yaml_schema'
-    end
   end,
 }
