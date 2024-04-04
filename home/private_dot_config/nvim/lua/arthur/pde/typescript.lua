@@ -85,8 +85,6 @@ return {
         ['json'] = { 'prettier' },
         ['jsonc'] = { 'prettier' },
         ['yaml'] = { 'prettier' },
-        ['markdown'] = { 'prettier' },
-        ['markdown.mdx'] = { 'prettier' },
         ['graphql'] = { 'prettier' },
         ['handlebars'] = { 'prettier' },
       },

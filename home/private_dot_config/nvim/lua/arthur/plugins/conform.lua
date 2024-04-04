@@ -46,6 +46,8 @@ return {
         ---@type table<string, conform.FormatterUnit[]>
         formatters_by_ft = {
           sh = { 'shfmt' },
+          ['markdown'] = { 'mdformat' },
+          ['markdown.mdx'] = { 'mdformat' },
         },
         formatters = {
           injected = { options = { ignore_errors = true } },
