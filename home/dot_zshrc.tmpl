@@ -89,6 +89,7 @@ plugins=(
     zsh-syntax-highlighting
     zsh-vi-mode
     fzf
+    direnv
 )
 
 fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
@@ -126,7 +127,7 @@ export EDITOR=vim
 source /usr/share/nvm/init-nvm.sh
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 {{ if not .is_devcontainer -}}
-eval "$(zellij setup --generate-auto-start zsh)"
+# eval "$(zellij setup --generate-auto-start zsh)"
 source /etc/profile.d/google-cloud-cli.sh
 {{- end }}
 {{ if .is_wsl -}}
