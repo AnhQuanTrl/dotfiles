@@ -84,6 +84,7 @@ ZVM_INIT_MODE=sourcing
 plugins=(
     git
     gcloud
+    poetry
     command-not-found
     zsh-autosuggestions
     zsh-syntax-highlighting
@@ -121,7 +122,11 @@ export EDITOR=vim
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
- alias gitui="gitui -t mocha.ron"
+alias gitui="gitui -t mocha.ron"
+{{ if .is_wsl -}}
+alias pbcopy="clip.exe"
+alias pbpaste="powershell.exe -command 'Get-Clipboard' | head -n -1"
+{{- end }}
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 source /usr/share/nvm/init-nvm.sh
