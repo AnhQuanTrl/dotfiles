@@ -44,9 +44,9 @@ return {
 
       -- Inlay hint
       local inlay_hint = vim.lsp.inlay_hint
-      Util.lsp.on_attach(function(client, buffer)
+      Util.lsp.on_attach(function(client, buf)
         if client.supports_method 'textDocument/inlayHint' then
-          inlay_hint.enable(buffer, true)
+          inlay_hint.enable(true, { bufnr = buf })
         end
       end)
 
@@ -61,7 +61,9 @@ return {
             return client.supports_method 'textDocument/codeLens'
           end, clients)
           if #supported_clients > 0 then
-            vim.lsp.codelens.refresh()
+            vim.lsp.codelens.refresh {
+              bufnr = buf,
+            }
           end
         end,
       })
