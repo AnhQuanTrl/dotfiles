@@ -7,4 +7,9 @@ README.md
 .oh-my-zsh/completions/_chezmoi
 {{- end }}
 
-
+{{ if ne .chezmoi.os "darwin" }}
+Library/Application Support/k9s/**
+{{ end }}
+{{ if ne .chezmoi.os "linux" }}
+.config/k9s/**
+{{ end }}

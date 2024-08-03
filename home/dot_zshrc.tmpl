@@ -1,5 +1,8 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
+{{- if eq .chezmoi.os "darwin" }}
+export PATH=/opt/homebrew/bin:$PATH
+{{- end }}
 export PATH=$HOME/.local/bin:$HOME/.local/share/bob/nvim-bin:$PATH
 
 # Path to your oh-my-zsh installation.
@@ -88,6 +91,8 @@ plugins=(
     zsh-autosuggestions
     zsh-syntax-highlighting
     zsh-vi-mode
+    asdf
+    dotnet
     fzf
     direnv
 )
@@ -128,7 +133,13 @@ alias pbpaste="powershell.exe -command 'Get-Clipboard' | head -n -1"
 {{- end }}
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+{{- if eq .chezmoi.os "darwin" }}
+export NVM_DIR="$HOME/.nvm"
+  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+{{ else }}
 source /usr/share/nvm/init-nvm.sh
+{{- end }}
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 {{ if not .is_devcontainer -}}
 # eval "$(zellij setup --generate-auto-start zsh)"
