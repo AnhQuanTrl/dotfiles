@@ -3,7 +3,7 @@
 {{- if eq .chezmoi.os "darwin" }}
 export PATH=/opt/homebrew/bin:$PATH
 {{- end }}
-export PATH=$HOME/.local/bin:$HOME/.local/share/bob/nvim-bin:$PATH
+export PATH=$HOME/.local/bin:$HOME/.local/share/bob/nvim-bin:/home/arthur/.dotnet/tools:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
