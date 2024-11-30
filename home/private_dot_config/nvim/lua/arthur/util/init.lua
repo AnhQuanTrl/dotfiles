@@ -5,6 +5,7 @@ local LazyUtil = require 'lazy.core.util'
 ---@field lsp arthur.util.lsp
 ---@field format arthur.util.format
 ---@field sourceaction arthur.util.sourceaction
+---@field cmp arthur.util.cmp
 local M = {}
 
 setmetatable(M, {
@@ -59,6 +60,13 @@ function M.on_load(name, fn)
         end
       end,
     })
+  end
+end
+
+M.CREATE_UNDO = vim.api.nvim_replace_termcodes('<c-G>u', true, true, true)
+function M.create_undo()
+  if vim.api.nvim_get_mode().mode == 'i' then
+    vim.api.nvim_feedkeys(M.CREATE_UNDO, 'n', false)
   end
 end
 

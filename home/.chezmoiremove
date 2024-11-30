@@ -1,0 +1,2 @@
+.config/nvim/lua/arthur/plugins/luasnip.lua
+.config/nvim/lua/arthur/plugins/nvim-cmp.lua
