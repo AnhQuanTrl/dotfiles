@@ -1,19 +1,22 @@
 return {
   'folke/which-key.nvim',
   event = 'VeryLazy',
+  opts_extend = { 'spec' },
   opts = function()
     local options = {
-      plugins = { spelling = true },
-      defaults = {
-        mode = { 'n', 'v' },
-        ['<leader>s'] = { name = '[S]earch' },
-        ['<leader>f'] = { name = '[F]iles/[F]ind' },
-        ['<leader>u'] = { name = '[U]I' },
-        ['<leader>c'] = { name = '+[C]ode' },
+      spec = {
+        {
+          mode = { 'n', 'v' },
+          { '<leader>s', group = '[S]earch' },
+          { '<leader>f', group = '[F]iles/[F]ind' },
+          { '<leader>u', group = '[U]I' },
+          { '<leader>c', group = '+[C]ode' },
+        },
       },
     }
+
     if require('arthur.util').has 'noice.nvim' then
-      options.defaults['<leader>sn'] = { name = '[N]oice' }
+      table.insert(options.spec[1], { '<leader>sn', group = '[N]oice' })
     end
 
     return options
@@ -21,7 +24,5 @@ return {
   config = function(_, opts)
     local wk = require 'which-key'
     wk.setup(opts)
-
-    wk.register(opts.defaults)
   end,
 }

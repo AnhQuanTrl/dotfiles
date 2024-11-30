@@ -14,10 +14,17 @@ return {
         basedpyright = {
           mason = false,
           settings = {
-            basedpyright = {},
+            basedpyright = {
+              disableOrganizeImports = true,
+              analysis = {
+                diagnosticSeverityOverrides = {
+                  reportAny = false,
+                },
+              },
+            },
           },
         },
-        ruff_lsp = {
+        ruff = {
           mason = false,
           keys = {
             {
@@ -38,9 +45,9 @@ return {
         },
       },
       setup = {
-        ruff_lsp = function()
+        ruff = function()
           Util.lsp.on_attach(function(client, _)
-            if client.name == 'ruff_lsp' then
+            if client.name == 'ruff' then
               -- Disable hover in favor of Pyright
               client.server_capabilities.hoverProvider = false
             end
