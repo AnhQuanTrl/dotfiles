@@ -8,6 +8,14 @@ local function map(mode, lhs, rhs, opts)
   vim.keymap.set(mode, lhs, rhs, options)
 end
 
+-- -- Make Ctrl-C same as ESC and also stop vim.snippet session
+-- map({ 'i', 's', 'v' }, '<C-c>', function()
+--   if vim.snippet.active() then
+--     vim.snippet.stop()
+--   end
+--   return '<Esc>'
+-- end, { desc = 'Make C-c same as Esc', expr = true })
+
 -- Make spac a <Nop> key as it is used for <leader>
 map({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 

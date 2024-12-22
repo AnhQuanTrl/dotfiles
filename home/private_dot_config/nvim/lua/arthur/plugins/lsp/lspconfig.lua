@@ -8,7 +8,7 @@ return {
       'mason.nvim',
       'williamboman/mason-lspconfig.nvim',
       'folke/neodev.nvim',
-      'hrsh7th/cmp-nvim-lsp',
+      -- 'hrsh7th/cmp-nvim-lsp',
     },
     opts = {
       diagnostics = {
@@ -69,12 +69,14 @@ return {
       })
 
       local servers = opts.servers
-      local has_cmp, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
+      -- local has_cmp, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
+      local blink = require 'blink-cmp'
       local capabilities = vim.tbl_deep_extend(
         'force',
         {},
         vim.lsp.protocol.make_client_capabilities(),
-        has_cmp and cmp_nvim_lsp.default_capabilities() or {},
+        -- has_cmp and cmp_nvim_lsp.default_capabilities() or {},
+        blink.get_lsp_capabilities(),
         opts.capabilities or {}
       ) --[[@as table]]
 
