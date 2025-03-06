@@ -1,8 +1,21 @@
+local Util = require 'arthur.util'
+
 return {
   'nvim-tree/nvim-tree.lua',
   dependencies = { 'nvim-tree/nvim-web-devicons' },
   keys = {
-    { '<leader>fe', '<cmd>NvimTreeFindFileToggle<cr>', desc = '[F]ile [E]xplorer' },
+    {
+      '<leader>fe',
+      function()
+        local api = require 'nvim-tree.api'
+        api.tree.toggle {
+          find_file = true,
+          focus = true,
+          path = Util.root(),
+        }
+      end,
+      desc = '[F]ile [E]xplorer',
+    },
   },
   opts = {
     git = {

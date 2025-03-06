@@ -55,6 +55,7 @@ require('lazy').setup {
     { import = 'arthur.plugins.lsp' },
     { import = 'arthur.plugins.ui' },
     { import = 'arthur.plugins.coding' },
+    { import = 'arthur.plugins.dap' },
     { import = 'arthur.pde' },
   },
   defaults = { lazy = true, version = nil },

@@ -49,10 +49,25 @@ vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 -- theme
 vim.opt.termguicolors = true
 vim.opt.fillchars:append 'eob: '
+vim.opt.laststatus = 3
 
 -- format
 vim.g.autoformat = true
 vim.g.autoaction = true
 
+-- leader
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ','
+
+--- Custom options
+
+-- Root dir detection
+-- Each entry can be:
+-- * the name of a detector function like `lsp` or `cwd`
+-- * a pattern or array of patterns like `.git` or `lua`.
+-- * a function with signature `function(buf) -> string|string[]`
+vim.g.root_spec = { 'lsp', { '.git', 'lua' }, 'cwd' }
+
+-- Set LSP servers to be ignored when used with `util.root.detectors.lsp`
+-- for detecting the LSP root
+vim.g.root_lsp_ignore = { 'copilot' }

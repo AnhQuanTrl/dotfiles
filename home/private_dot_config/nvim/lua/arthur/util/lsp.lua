@@ -3,16 +3,16 @@ local Util = require 'arthur.util'
 ---@class arthur.util.lsp
 local M = {}
 
----@alias lsp.Client.filter {id?: number, bufnr?: number, name?: string, method?: string, filter?:fun(client: lsp.Client):boolean}
+---@alias lsp.Client.filter {id?: number, bufnr?: number, name?: string, method?: string, filter?:fun(client: vim.lsp.Client):boolean}
 
 ---@param opts? lsp.Client.filter
 function M.get_clients(opts)
-  local ret = {} ---@type lsp.Client
+  local ret = {} ---@type vim.lsp.Client[]
   ret = vim.lsp.get_clients(opts)
   return opts and opts.filter and vim.tbl_filter(opts.filter, ret) or ret
 end
 
----@param on_attach fun(client:lsp.Client, buffer:number)
+---@param on_attach fun(client:vim.lsp.Client, buffer:number)[]
 function M.on_attach(on_attach)
   vim.api.nvim_create_autocmd('LspAttach', {
     callback = function(args)
@@ -60,11 +60,11 @@ function M.formatter(opts)
     end,
     sources = function(buf)
       local clients = M.get_clients(Util.merge(filter, { bufnr = buf }))
-      ---@param client lsp.Client
+      ---@param client vim.lsp.Client
       local ret = vim.tbl_filter(function(client)
         return client.supports_method 'textDocument/formatting' or client.supports_method 'textDocument/rangeFormatting'
       end, clients)
-      ---@param client lsp.Client
+      ---@param client vim.lsp.Client
       return vim.tbl_map(function(client)
         return client.name
       end, ret)

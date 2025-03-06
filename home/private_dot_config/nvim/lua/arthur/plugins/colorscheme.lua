@@ -7,6 +7,7 @@ return {
     flavour = 'mocha',
     integrations = {
       cmp = true,
+      blink_cmp = true,
       mason = true,
       telescope = {
         enabled = true,
@@ -14,6 +15,8 @@ return {
       which_key = true,
       noice = true,
       notify = true,
+      dap = true,
+      dap_ui = true,
       native_lsp = {
         enabled = true,
         virtual_text = {

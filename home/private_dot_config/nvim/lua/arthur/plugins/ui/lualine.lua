@@ -6,11 +6,28 @@ return {
   dependencies = {
     'nvim-tree/nvim-web-devicons',
   },
+  init = function()
+    -- Remove lualine if starting nvim without argument
+    vim.g.lualine_laststatus = vim.o.laststatus
+    if vim.fn.argc(-1) > 0 then
+      vim.o.statusline = ' '
+    else
+      vim.o.laststatus = 0
+    end
+  end,
   opts = function()
-    return {
+    -- PERF: we don't need this lualine require madness 🤷
+    local lualine_require = require 'lualine_require'
+    lualine_require.require = require
+
+    vim.o.laststatus = vim.g.lualine_laststatus
+
+    local opts = {
       options = {
         theme = 'catppuccin',
-        globalstatus = true,
+        globalstatus = vim.o.laststatus == 3,
+        -- Disable for 'dashboard' type of files
+        disabled_filetypes = { statusline = { 'dashboard', 'alpha', 'ministarter', 'snacks_dashboard' } },
       },
       sections = {
         lualine_x = {
@@ -28,5 +45,7 @@ return {
       },
       extensions = { 'quickfix', 'nvim-tree', 'lazy' },
     }
+
+    return opts
   end,
 }

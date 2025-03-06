@@ -1,0 +1,2 @@
+Add root detecting mechanism
+Modify lualine

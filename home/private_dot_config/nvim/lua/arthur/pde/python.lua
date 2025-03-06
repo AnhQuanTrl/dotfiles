@@ -16,11 +16,13 @@ return {
           settings = {
             basedpyright = {
               disableOrganizeImports = true,
-              analysis = {
-                diagnosticSeverityOverrides = {
-                  reportAny = false,
-                },
-              },
+              -- Settings should be set in pyproject.toml instead.
+              --
+              -- analysis = {
+              --   diagnosticSeverityOverrides = {
+              --     reportAny = false,
+              --   },
+              -- },
             },
           },
         },
@@ -41,7 +43,12 @@ return {
               desc = 'Organize Imports',
             },
           },
-          settings = {},
+          trace = 'messages',
+          init_options = {
+            settings = {
+              logLevel = 'error',
+            },
+          },
         },
       },
       setup = {
@@ -53,6 +60,26 @@ return {
             end
           end)
         end,
+      },
+    },
+  },
+  {
+    'mfussenegger/nvim-dap',
+    optional = true,
+    dependencies = {
+      'mfussenegger/nvim-dap-python',
+      config = function()
+        require('dap-python').setup(Util.get_pkg_path('debugpy', '/venv/bin/python'))
+      end,
+    },
+  },
+  -- Don't mess up DAP adapters provided by nvim-dap-python
+  {
+    'jay-babu/mason-nvim-dap.nvim',
+    optional = true,
+    opts = {
+      handlers = {
+        python = function() end,
       },
     },
   },
