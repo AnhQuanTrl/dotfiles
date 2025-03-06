@@ -90,7 +90,9 @@ ZVM_INIT_MODE=sourcing
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
     git
+{{- if not .is_work_machine }}
     gcloud
+{{- end }}
     aws
     command-not-found
     zsh-autosuggestions
@@ -138,18 +140,25 @@ alias pbcopy="clip.exe"
 alias pbpaste="powershell.exe -command 'Get-Clipboard' | head -n -1"
 {{- end }}
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 {{- if eq .chezmoi.os "darwin" }}
 export NVM_DIR="$HOME/.nvm"
   [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
   [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+HB_CNF_HANDLER="$(brew --repository)/Library/Taps/homebrew/homebrew-command-not-found/handler.sh"
+if [ -f "$HB_CNF_HANDLER" ]; then
+source "$HB_CNF_HANDLER";
+fi
 {{ else }}
 source /usr/share/nvm/init-nvm.sh
 {{- end }}
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 {{ if not .is_devcontainer -}}
 # eval "$(zellij setup --generate-auto-start zsh)"
+{{- if not .is_work_machine }}
 source /etc/profile.d/google-cloud-cli.sh
+{{- end }}
 {{- end }}
 {{ if .is_wsl -}}
 export BROWSER=wslview
@@ -161,3 +170,5 @@ export FZF_DEFAULT_OPTS=" \
 --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
 
 eval "$(direnv hook zsh)"
+
+export NAVI_CONFIG="$HOME/.config/navi/config.yaml"

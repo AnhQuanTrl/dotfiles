@@ -2,6 +2,7 @@
 {{- $devcontainer := or (env "REMOTE_CONTAINERS") (env "CODESPACES") (env "VSCODE_REMOTE_CONTAINERS_SESSION") (env "GITPOD_HOST") (env "IS_DEVPOD") | not | not -}}
 {{- $interactive := stdinIsATTY -}}
 {{- $wsl := and (eq .chezmoi.os "linux") (.chezmoi.kernel.osrelease | lower | contains "microsoft") | not | not -}}
+{{- $work_machine := promptBoolOnce . "work_machine" "Is this a work machine" }}
 
 sourceDir = {{ .chezmoi.sourceDir | quote }}
 
@@ -9,5 +10,6 @@ sourceDir = {{ .chezmoi.sourceDir | quote }}
     name = "arthur"
     is_devcontainer = {{ $devcontainer }}
     is_wsl = {{ $wsl }}
+    is_work_machine = {{ $work_machine }}
 [edit]
     command = "nvim"
