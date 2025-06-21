@@ -55,6 +55,9 @@ vim.opt.laststatus = 3
 vim.g.autoformat = true
 vim.g.autoaction = true
 
+-- wrap
+vim.opt.wrap = true
+
 -- leader
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ','

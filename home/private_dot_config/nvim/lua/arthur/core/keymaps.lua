@@ -64,3 +64,36 @@ end, { desc = 'Toggle auto format (buffer)' })
 map('n', '<leader>uh', function()
   vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = nil }, { bufnr = nil })
 end, { desc = 'Toggle Inlay Hint' })
+
+-- =========================================
+--  Yank “@file_path”  /  “@file_path#L..”  |
+-- =========================================
+local notify = require 'notify'
+
+local function yank_file_path()
+  local path = vim.fn.expand '%' -- path, relative to CWD
+  local ref = '@' .. path
+  vim.fn.setreg('+', ref) -- write to system clipboard
+
+  notify('󱉣 ' .. ref .. '  copied', 'info', { title = 'Clipboard' })
+end
+
+local function yank_file_path_with_lines()
+  local path = vim.fn.expand '%'
+  local from = vim.fn.line "'<" -- start of visual selection
+  local to = vim.fn.line "'>" -- end of visual selection
+  local range = (from == to) and ('#L' .. from) or ('#L' .. from .. '-' .. to)
+  local ref = '@' .. path .. range
+  vim.fn.setreg('+', ref)
+  -- exit Visual to leave the marks untouched
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'n', false)
+
+  notify('󱉣  ' .. ref .. '  copied', 'info', { title = 'Clipboard' })
+end
+
+-- Key-maps -------------------------------------------------
+-- <leader>yf  ➜  @relative/path/to/file.ext
+vim.keymap.set('n', '<leader>yf', yank_file_path, { desc = 'Yank @file_path to + register' })
+
+-- <leader>yl (visual) ➜  @file_path#Lstart-end
+vim.keymap.set('v', '<leader>yl', yank_file_path_with_lines, { desc = 'Yank @file_path#line_range to + register' })
