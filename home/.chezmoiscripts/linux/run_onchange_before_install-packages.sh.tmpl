@@ -1,0 +1,20 @@
+{{/* vim:ft=bash ts=2 sw=2 et: */}}
+
+{{- if eq .osid "linux-fedora" -}}
+
+{{ $packages := list
+     "zsh"
+     "@development-tools" -}}
+
+{{ $sudo := "sudo " -}}
+{{ if eq .chezmoi.username "root" -}}
+{{   $sudo = "" -}}
+{{ end -}}
+
+#!/bin/bash
+
+set -eufo pipefail
+
+{{ $sudo }}dnf install -y {{ $packages | join " " }}
+
+{{ end -}}

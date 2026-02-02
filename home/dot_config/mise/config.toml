@@ -1,0 +1,8 @@
+[tools]
+claude = "latest"
+java = "temurin-21"
+lua-language-server = "latest"
+neovim = "0.11.6"
+node = "lts"
+"npm:tree-sitter-cli" = "latest"
+starship = "latest"

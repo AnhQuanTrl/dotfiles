@@ -1,0 +1,31 @@
+# vim:ft=toml ts=4 sw=4 et:
+{{/* boolean feature tags */}}
+{{- $headless := false }}{{/* true if this machine does not have a screen and keyboard */}}
+{{- $personal := false -}}{{/* true if this machine should have personal secrets */}}
+{{- "" -}}
+
+{{- $osID := .chezmoi.os -}}
+{{- if (and (eq .chezmoi.os "linux") (hasKey .chezmoi.osRelease "id")) -}}
+{{-   $osID = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
+{{- end -}}
+
+{{/* detect WSL */}}
+{{- if and (eq .chezmoi.os "linux") (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
+{{-   $headless = true -}}
+{{- end }}
+
+[data]
+    headless = {{ $headless }}
+    personal = {{ $personal }}
+    osid = {{ $osID | quote }}
+    git_name = "AnhQuanTrl"
+    git_email = "36561860+AnhQuanTrl@users.noreply.github.com"
+    zshPlugins = [
+        "git",
+        "zsh-vi-mode",  
+        "zsh-autosuggestions",
+        "zsh-syntax-highlighting",
+    ]
+
+[bitwarden]
+    unlock = "auto"
