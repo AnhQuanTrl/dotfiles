@@ -1,3 +1,5 @@
+local Util = require 'anhquantrl.util'
+
 -- Highlight, edit, and navigate code
 return {
   {

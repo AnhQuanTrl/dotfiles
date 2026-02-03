@@ -53,7 +53,6 @@ require("lazy").setup({
     { import = 'anhquantrl.plugins' },
     { import = 'anhquantrl.plugins.editor' },
     { import = 'anhquantrl.plugins.ui' },
-    { import = 'anhquantrl.plugins.lsp' },
   },
 })
 

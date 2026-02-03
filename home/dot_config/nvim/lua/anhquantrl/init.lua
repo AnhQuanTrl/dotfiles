@@ -1,6 +1,5 @@
-_G.Util = require('anhquantrl.util')
-
 require("anhquantrl.core.options")
+require("anhquantrl.lsp")
 require("anhquantrl.core.lazy")
 
 vim.cmd.colorscheme("catppuccin-mocha")
