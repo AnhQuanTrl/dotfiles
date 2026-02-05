@@ -8,4 +8,5 @@ return {
       input = { enabled = true },
     },
   },
+  { "nvim-tree/nvim-web-devicons", opts = {}, lazy = false },
 }

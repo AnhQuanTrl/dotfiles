@@ -1,21 +1,21 @@
 local _done = {} ---@type table<string, boolean>
-local Util = require 'anhquantrl.util'
 
----@param client_id number
 ---@param buf number
 ---@param method string
 ---@return boolean
-local function should_handle(client_id, buf, method)
-  local key = ("%d:%d:%s"):format(client_id, buf, method)
+local function should_handle(buf, method)
+  local key = ("%d:%s"):format(buf, method)
   if _done[key] then return false end
   _done[key] = true
   return true
 end
 
----@param client_id number
 ---@param buf number
-local function on_detach(client_id, buf)
-  local prefix = ("%d:%d:"):format(client_id, buf)
+local function on_detach(buf)
+  -- Only cleanup when no LSP clients remain
+  if #vim.lsp.get_clients({ bufnr = buf }) > 0 then return end
+
+  local prefix = ("%d:"):format(buf)
   for key in pairs(_done) do
     if key:sub(1, #prefix) == prefix then
       _done[key] = nil
@@ -43,13 +43,13 @@ local function on_attach(client, buf)
 
   -- Folding
   if client:supports_method('textDocument/foldingRange')
-    and should_handle(client.id, buf, 'textDocument/foldingRange') then
-    Util.fold.setup(buf)
+    and should_handle(buf, 'textDocument/foldingRange') then
+    require("anhquantrl.config.fold").setup(buf)
   end
 
   -- Document highlight
   if client:supports_method('textDocument/documentHighlight')
-    and should_handle(client.id, buf, 'textDocument/documentHighlight') then
+    and should_handle(buf, 'textDocument/documentHighlight') then
     local group = vim.api.nvim_create_augroup('anhquantrl-lsp-highlight', { clear = false })
     vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
       buffer = buf,
@@ -65,12 +65,12 @@ local function on_attach(client, buf)
 
   -- Inlay hints
   if client:supports_method('textDocument/inlayHint')
-    and should_handle(client.id, buf, 'textDocument/inlayHint') then
+    and should_handle(buf, 'textDocument/inlayHint') then
     vim.lsp.inlay_hint.enable(true, { bufnr = buf })
   end
 end
 
-require('anhquantrl.lsp.servers')
+require('anhquantrl.config.lsp.servers')
 
 local group = vim.api.nvim_create_augroup('anhquantrl-lsp', { clear = true })
 
@@ -103,7 +103,7 @@ end)(vim.lsp.handlers['client/registerCapability'])
 vim.api.nvim_create_autocmd('LspDetach', {
   group = group,
   callback = function(ev)
-    on_detach(ev.data.client_id, ev.buf)
+    on_detach(ev.buf)
   end,
 })
 

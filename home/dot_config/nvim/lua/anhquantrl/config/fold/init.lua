@@ -1,5 +1,6 @@
-local M = {}
+require("anhquantrl.config.fold.foldtext")
 
+local M = {}
 local _priority = { lsp = 3, treesitter = 2, indent = 1 }
 
 ---@param buf number

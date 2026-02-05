@@ -15,6 +15,7 @@ return {
           SnacksInputTitle = { link = "FloatTitle" },
           SnacksInputNormal = { link = "NormalFloat" },
           SnacksInputIcon = { fg = colors.flamingo },
+          FodedLineCount = { fg = colors.crust },
         }
       end
     },

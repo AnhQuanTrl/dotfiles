@@ -1,5 +1,3 @@
-local Util = require 'anhquantrl.util'
-
 -- Highlight, edit, and navigate code
 return {
   {
@@ -64,7 +62,7 @@ return {
           local lang = vim.treesitter.language.get_lang(ft)
           -- enable fold for supported file types
           if not lang or vim.treesitter.query.get(lang, "folds") ~= nil then
-            Util.fold.setup(ev.buf)
+            require("anhquantrl.config.fold").setup(ev.buf)
           end
         end,
       })
