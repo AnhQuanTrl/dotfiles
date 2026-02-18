@@ -14,6 +14,13 @@
 {{-   $headless = true -}}
 {{- end }}
 
+{{- if stdinIsATTY -}}
+{{-   $headless = promptBoolOnce . "headless" "headless" -}}
+{{-   $personal = promptBoolOnce . "personal" "personal" -}}
+{{- else -}}
+{{-   $headless = true -}}
+{{- end -}}
+
 [data]
     headless = {{ $headless }}
     personal = {{ $personal }}

@@ -1,4 +1,3 @@
-{{- /* vim:ft=bash ts=2 sw=2 et: */ -}}
 {{ $sudo := "sudo " -}}
 {{ if eq .chezmoi.username "root" -}}
 {{   $sudo = "" -}}
@@ -9,3 +8,4 @@
 set -eufo pipefail
 
 {{ $sudo }}sudo usermod -s $(which zsh) $USER
+{{/* vim: set ft=bash ts=2 sw=2 et:  */}}

@@ -1,0 +1,21 @@
+{{- if eq .osid "linux-fedora" -}}
+
+#!/bin/bash
+
+set -eufo pipefail
+if ! dnf copr list | grep -q jdxcode/mise; then
+  sudo dnf copr enable -y jdxcode/mise
+fi
+sudo dnf install -y mise
+
+{{ if .personal -}}
+{{- if env "GH_ACCESS_TOKEN" -}}
+MISE_GITHUB_TOKEN={{ env "GH_ACCESS_TOKEN" }} mise install --yes
+{{- else -}}
+MISE_GITHUB_TOKEN={{ (bitwarden "item" "gh_access_token").notes | trim }} mise install --yes
+{{- end -}}
+{{ end -}}
+
+{{ end -}}
+{{/* vim: set ft=bash ts=2 sw=2 et:  */}}
+

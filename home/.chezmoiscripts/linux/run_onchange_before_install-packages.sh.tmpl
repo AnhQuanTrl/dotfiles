@@ -1,5 +1,3 @@
-{{/* vim:ft=bash ts=2 sw=2 et: */}}
-
 {{- if eq .osid "linux-fedora" -}}
 
 {{ $packages := list
@@ -18,3 +16,4 @@ set -eufo pipefail
 {{ $sudo }}dnf install -y {{ $packages | join " " }}
 
 {{ end -}}
+{{/* vim: set ft=bash ts=2 sw=2 et:  */}}
