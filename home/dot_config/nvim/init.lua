@@ -1,1 +1,1 @@
-require("anhquantrl")
+require 'anhquantrl'

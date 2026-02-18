@@ -15,12 +15,12 @@ return {
       'selene.toml',
       'selene.yml',
     },
-    { '.git' }
+    { '.git' },
   },
   settings = {
     Lua = {
       codeLens = { enable = true },
       hint = { enable = true, semicolon = 'Disable' },
     },
-  }
+  },
 }

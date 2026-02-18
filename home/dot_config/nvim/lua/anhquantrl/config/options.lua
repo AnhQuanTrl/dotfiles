@@ -1,6 +1,11 @@
+-- disable netrw
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 -- Configure clipboard for WSL environment
-if vim.fn.has 'wsl' then
-  vim.g.clipboard = { name = 'WslClipboard',
+if vim.fn.has 'wsl' ~= 0 then
+  vim.g.clipboard = {
+    name = 'WslClipboard',
     copy = {
       ['+'] = 'clip.exe',
       ['*'] = 'clip.exe',
@@ -11,6 +16,9 @@ if vim.fn.has 'wsl' then
     },
     cache_enabled = false,
   }
+else
+  -- force osc52
+  vim.g.clipboard = 'osc52'
 end
 
 -- leader
@@ -35,12 +43,20 @@ vim.opt.foldtext = ''
 -- theme: color, fillchars
 vim.opt.termguicolors = true
 vim.opt.fillchars = {
-  eob = " ", -- remove the ~ character t the end of the buffer
-  fold = " ", --  removes the dots/characters in the fold column
+  eob = ' ', -- remove the ~ character t the end of the buffer
+  fold = ' ', --  removes the dots/characters in the fold column
   foldopen = '',
   foldclose = '',
   foldsep = ' ', -- default is │
 }
+-- merge status line for different buffer (global)
+vim.opt.laststatus = 3
+
+-- floating window default border
+vim.o.winborder = 'rounded'
+
+-- disable annoying PRESS ENTER TO ...
+vim.o.messagesopt = 'wait:1000,history:500'
 
 -- Diagnostics config
 -- See :help vim.diagnostic.Opts
@@ -65,5 +81,5 @@ vim.diagnostic.config {
       [vim.diagnostic.severity.INFO] = '',
       [vim.diagnostic.severity.HINT] = '',
     },
-  }
+  },
 }

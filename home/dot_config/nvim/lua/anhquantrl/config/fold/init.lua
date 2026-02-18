@@ -1,13 +1,17 @@
-require("anhquantrl.config.fold.foldtext")
+require 'anhquantrl.config.fold.foldtext'
 
 local M = {}
 local _priority = { lsp = 3, treesitter = 2, indent = 1 }
 
 ---@param buf number
 function M.apply(buf)
-  if buf ~= vim.api.nvim_get_current_buf() then return end
+  if buf ~= vim.api.nvim_get_current_buf() then
+    return
+  end
   local source = vim.b[buf].fold_source
-  if not source then return end
+  if not source then
+    return
+  end
 
   local win = vim.api.nvim_get_current_win()
   if source == 'lsp' then
@@ -25,11 +29,11 @@ end
 function M.setup(buf)
   local current = vim.b[buf].fold_source
 
-   -- Determine best available method
+  -- Determine best available method
   local best = 'indent'
 
-  for _, c in ipairs(vim.lsp.get_clients({ bufnr = buf })) do
-    if c:supports_method('textDocument/foldingRange') then
+  for _, c in ipairs(vim.lsp.get_clients { bufnr = buf }) do
+    if c:supports_method 'textDocument/foldingRange' then
       best = 'lsp'
       break
     end
@@ -42,7 +46,7 @@ function M.setup(buf)
     end
   end
 
-   -- Only update if better than current
+  -- Only update if better than current
   if not current or _priority[best] > _priority[current] then
     vim.b[buf].fold_source = best
     M.apply(buf)

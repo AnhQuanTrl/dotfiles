@@ -4,8 +4,10 @@ local _done = {} ---@type table<string, boolean>
 ---@param method string
 ---@return boolean
 local function should_handle(buf, method)
-  local key = ("%d:%s"):format(buf, method)
-  if _done[key] then return false end
+  local key = ('%d:%s'):format(buf, method)
+  if _done[key] then
+    return false
+  end
   _done[key] = true
   return true
 end
@@ -13,9 +15,11 @@ end
 ---@param buf number
 local function on_detach(buf)
   -- Only cleanup when no LSP clients remain
-  if #vim.lsp.get_clients({ bufnr = buf }) > 0 then return end
+  if #vim.lsp.get_clients { bufnr = buf } > 0 then
+    return
+  end
 
-  local prefix = ("%d:"):format(buf)
+  local prefix = ('%d:'):format(buf)
   for key in pairs(_done) do
     if key:sub(1, #prefix) == prefix then
       _done[key] = nil
@@ -25,31 +29,18 @@ local function on_detach(buf)
   vim.api.nvim_clear_autocmds { group = 'anhquantrl-lsp-highlight', buffer = buf }
 end
 
----@param buf number
-local function set_keymaps(buf)
-  local map = function(keys, func, desc, mode)
-    mode = mode or 'n'
-    vim.keymap.set(mode, keys, func, { buffer = buf, desc = 'LSP: ' .. desc })
-  end
-
-  map('grD', vim.lsp.buf.declaration, 'Goto Declaration')
-  map('grd', vim.lsp.buf.definition, 'Goto Definition')
-end
-
 ---@param client vim.lsp.Client
 ---@param buf number
 local function on_attach(client, buf)
-  set_keymaps(buf)
+  require('anhquantrl.config.lsp.keymaps').on_attach(client, buf)
 
   -- Folding
-  if client:supports_method('textDocument/foldingRange')
-    and should_handle(buf, 'textDocument/foldingRange') then
-    require("anhquantrl.config.fold").setup(buf)
+  if client:supports_method 'textDocument/foldingRange' and should_handle(buf, 'textDocument/foldingRange') then
+    require('anhquantrl.config.fold').setup(buf)
   end
 
   -- Document highlight
-  if client:supports_method('textDocument/documentHighlight')
-    and should_handle(buf, 'textDocument/documentHighlight') then
+  if client:supports_method 'textDocument/documentHighlight' and should_handle(buf, 'textDocument/documentHighlight') then
     local group = vim.api.nvim_create_augroup('anhquantrl-lsp-highlight', { clear = false })
     vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
       buffer = buf,
@@ -64,13 +55,12 @@ local function on_attach(client, buf)
   end
 
   -- Inlay hints
-  if client:supports_method('textDocument/inlayHint')
-    and should_handle(buf, 'textDocument/inlayHint') then
+  if client:supports_method 'textDocument/inlayHint' and should_handle(buf, 'textDocument/inlayHint') then
     vim.lsp.inlay_hint.enable(true, { bufnr = buf })
   end
 end
 
-require('anhquantrl.config.lsp.servers')
+require 'anhquantrl.config.lsp.servers'
 
 local group = vim.api.nvim_create_augroup('anhquantrl-lsp', { clear = true })
 
@@ -107,4 +97,5 @@ vim.api.nvim_create_autocmd('LspDetach', {
   end,
 })
 
-vim.lsp.enable("lua_ls")
+vim.lsp.enable 'lua_ls'
+vim.lsp.enable 'vtsls'
