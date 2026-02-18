@@ -32,7 +32,7 @@ return {
             click = 'v:lua.ScFa',
           },
           {
-            sign = { name = { '.*' }, maxwidth = 2, auto = true, wrap = true },
+            sign = { name = { '.*' }, text = { '.*' }, maxwidth = 2, auto = true, wrap = true },
             click = 'v:lua.ScSa',
           },
         },

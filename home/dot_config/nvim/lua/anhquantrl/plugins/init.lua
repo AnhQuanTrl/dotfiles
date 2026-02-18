@@ -8,6 +8,15 @@ return {
       input = { enabled = true },
       scroll = { enabled = true },
     },
+    keys = {
+      {
+        '<leader>gg',
+        function()
+          Snacks.lazygit()
+        end,
+        desc = 'Lazygit',
+      },
+    },
   },
   { 'nvim-tree/nvim-web-devicons', opts = {}, lazy = false },
 }
