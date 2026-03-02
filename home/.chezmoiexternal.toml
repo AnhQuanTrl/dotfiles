@@ -42,9 +42,15 @@
     exact = true
     stripComponents = 1
     refreshPeriod = "168h"
-     exclude = [
+    exclude = [
         "*/.editorconfig",
         "*/.gitattributes",
         "*/.github",
         "*/.gitignore",
     ]
+
+[".config/tmux/plugins/tpm"]
+    type = "git-repo"
+    url = "https://github.com/tmux-plugins/tpm"
+    refreshPeriod = "168h"
+

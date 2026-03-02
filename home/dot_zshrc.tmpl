@@ -92,7 +92,13 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
-ZSH_THEME_TERM_TITLE_IDLE="$(shrink_path -f)"
+function my_termsupport_precmd {
+  ZSH_THEME_TERM_TITLE_IDLE="$(shrink_path -f)"
+}
+
+add-zsh-hook -d precmd omz_termsupport_precmd
+add-zsh-hook precmd my_termsupport_precmd
+add-zsh-hook precmd omz_termsupport_precmd
 
 # User configuration
 
