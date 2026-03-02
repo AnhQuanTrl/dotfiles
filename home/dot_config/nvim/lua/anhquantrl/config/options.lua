@@ -2,19 +2,24 @@
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+function no_paste(reg)
+  return function(lines)
+    -- Do nothing! We can't paste with OSC52
+  end
+end
+
 -- Configure clipboard for WSL environment
 if vim.fn.has 'wsl' ~= 0 then
   vim.g.clipboard = {
     name = 'WslClipboard',
     copy = {
-      ['+'] = 'clip.exe',
-      ['*'] = 'clip.exe',
+      ['+'] = require('vim.ui.clipboard.osc52').copy '+',
+      ['*'] = require('vim.ui.clipboard.osc52').copy '*',
     },
     paste = {
-      ['+'] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-      ['*'] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+      ['+'] = no_paste '+', -- Pasting disabled
+      ['*'] = no_paste '*', -- Pasting disabled
     },
-    cache_enabled = false,
   }
 else
   -- force osc52
@@ -40,7 +45,7 @@ vim.opt.foldlevel = 99 -- current fold depth
 vim.opt.foldcolumn = '1'
 vim.opt.foldtext = ''
 
--- theme: color, fillchars
+-- theme: color, fillchars,listchars
 vim.opt.termguicolors = true
 vim.opt.fillchars = {
   eob = ' ', -- remove the ~ character t the end of the buffer
@@ -49,14 +54,18 @@ vim.opt.fillchars = {
   foldclose = '',
   foldsep = ' ', -- default is │
 }
+vim.opt.list = true
+vim.opt.listchars = {
+  -- space = '⋅',
+  eol = '↴',
+  tab = '→ ',
+}
+
 -- merge status line for different buffer (global)
 vim.opt.laststatus = 3
 
 -- floating window default border
 vim.o.winborder = 'rounded'
-
--- disable annoying PRESS ENTER TO ...
-vim.o.messagesopt = 'wait:1000,history:500'
 
 -- Diagnostics config
 -- See :help vim.diagnostic.Opts

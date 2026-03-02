@@ -1,0 +1,82 @@
+# Options to make tmux more pleasant
+set -g mouse on
+set -g allow-rename on
+set -g set-titles on
+# set -g default-terminal "tmux-256color"
+# set -ag terminal-overrides ",*:RGB"
+set -s set-clipboard on
+set -g allow-passthrough on
+set -g default-terminal "${TERM}"
+set -ga update-environment TERM
+set -ga update-environment TERM_PROGRAM
+set -as terminal-overrides ',*:Ms=\E]52;%p1%s;%p2%s\007'
+# set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'  # undercurl support
+# set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m'  # underscore colours - needs tmux-3.0
+
+# Better scrolling behavior
+# https://www.reddit.com/r/tmux/comments/tqmyzm/snippet_better_scrolling/
+bind-key -n WheelUpPane if-shell -F "#{alternate_on}" \
+  "if-shell -F \"#{mouse_any_flag}\" \
+    \"send-key -M\" \
+    \"send-key -N 3 Up\"" \
+  "copy-mode -e ; send-key -M"
+bind-key -n WheelDownPane if-shell -F "#{alternate_on}" \
+  "if-shell -F \"#{mouse_any_flag}\" \
+    \"send-key -M\" \
+    \"send-key -N 3 Down\"" \
+  "if-shell -F \"#{pane_in_mode}\" \
+    \"send-key -M\""
+
+# Configure the catppuccin plugin
+set -g @catppuccin_flavor "mocha"
+# set -g @catppuccin_window_text " #{?#{automatic-rename},#T,#W}"
+# set -g @catppuccin_window_current_text " #{?#{automatic-rename},#T,#W}"
+set -g @catppuccin_window_text " #W"
+set -g @catppuccin_window_current_text " #W"
+set -g @catppuccin_window_status_style "rounded"
+set -g @catppuccin_window_flags "icon"
+set -g @catppuccin_window_flags_icon_last " " # -
+set -g @catppuccin_window_flags_icon_current " " # *
+set -g @catppuccin_window_flags_icon_zoom " " # Z
+set -g @catppuccin_window_flags_icon_mark " 󰃀" # M
+set -g @catppuccin_window_flags_icon_silent " 󰂛" # ~
+set -g @catppuccin_window_flags_icon_activity " 󱅫" # #
+set -g @catppuccin_window_flags_icon_bell " 󰂞" # !
+
+# Pane names
+# set -g pane-border-status top
+# set -g @catppuccin_pane_status_enabled "yes"
+# set -g @catppuccin_pane_border_status "yes"
+# set -g @catppuccin_pane_default_text "##{pane_title}"
+set -g pane-border-status top
+set -g @catppuccin_pane_status_enabled "no"
+set -g @catppuccin_pane_border_status "no"
+set -g pane-border-format " #{pane_title} "
+set -g pane-border-style "fg=#{@thm_surface_1}"
+set -g pane-active-border-style "fg=#{@thm_lavender}"
+
+
+# Load catppuccin
+set -g @plugin 'catppuccin/tmux#v2.1.3'
+
+# Make the status line pretty and add some modules
+set-option -g status on
+set-option -g status-position top
+set -g status-right-length 100
+set -g status-left-length 100
+set -g status-left ""
+set -g status-right "#{E:@catppuccin_status_application}"
+set -agF status-right "#{E:@catppuccin_status_cpu}"
+set -ag status-right "#{E:@catppuccin_status_session}"
+set -ag status-right "#{E:@catppuccin_status_uptime}"
+set -ag status-right "#{E:@catppuccin_status_date_time}"
+
+# List of plugins
+set -g @plugin "tmux-plugins/tpm"
+set -g @plugin "tmux-plugins/tmux-cpu"
+set -g @plugin "robhurring/tmux-uptime"
+set -g @plugin 'tmux-plugins/tmux-resurrect'
+
+
+# Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+run ~/.config/tmux/plugins/tpm/tpm

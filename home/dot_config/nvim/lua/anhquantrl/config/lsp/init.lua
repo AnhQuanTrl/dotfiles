@@ -99,3 +99,6 @@ vim.api.nvim_create_autocmd('LspDetach', {
 
 vim.lsp.enable 'lua_ls'
 vim.lsp.enable 'vtsls'
+vim.lsp.enable 'gopls'
+vim.lsp.enable 'basedpyright'
+vim.lsp.enable 'ruff'

@@ -1,0 +1,14 @@
+{{- if eq .chezmoi.os "darwin" -}}
+
+{{ $packages := list -}}
+
+#!/bin/bash
+
+set -eufo pipefail
+
+{{ if $packages -}}
+brew install {{ $packages | join " " }}
+{{ end -}}
+
+{{ end -}}
+{{/* vim: set ft=bash ts=2 sw=2 et:  */}}

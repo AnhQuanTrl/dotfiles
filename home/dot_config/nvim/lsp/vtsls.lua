@@ -4,6 +4,13 @@ return {
   init_options = {
     hostInfo = 'neovim',
   },
+  settings = {
+    typescript = {
+      preferences = {
+        importModuleSpecifier = 'non-relative',
+      },
+    },
+  },
   filetypes = {
     'javascript',
     'javascriptreact',

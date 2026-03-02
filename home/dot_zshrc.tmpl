@@ -1,4 +1,8 @@
 # If you come from bash you might have to change your $PATH.
+{{- if stat "/opt/homebrew/bin/brew" }}
+eval "$(/opt/homebrew/bin/brew shellenv)"
+{{- end -}}
+
 {{- $paths := list }}
 {{- $homeDir := .chezmoi.homeDir }}
 {{- range $_, $relPath := list "bin" ".local/bin" }}
@@ -88,8 +92,12 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
+ZSH_THEME_TERM_TITLE_IDLE="$(shrink_path -f)"
+
 # User configuration
 
 eval "$(mise activate zsh)"
 
 eval "$(starship init zsh)"
+
+# vim: set ft=bash ts=2 sw=2 et:
