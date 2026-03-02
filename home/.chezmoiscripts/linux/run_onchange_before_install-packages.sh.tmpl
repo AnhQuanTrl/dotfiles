@@ -2,7 +2,12 @@
 
 {{ $packages := list
      "zsh"
-     "@development-tools" -}}
+     "@development-tools"
+     "golang"
+     "pipx" -}}
+
+{{ $coprRepos := list
+     "@go-sig/golang-rawhide" -}}
 
 {{ $sudo := "sudo " -}}
 {{ if eq .chezmoi.username "root" -}}
@@ -13,6 +18,12 @@
 
 set -eufo pipefail
 
+# Enable COPR repositories
+{{ range $coprRepos -}}
+{{ $sudo }}dnf copr enable -y {{ . }}
+{{ end }}
+
+# Install packages
 {{ $sudo }}dnf install -y {{ $packages | join " " }}
 
 {{ end -}}

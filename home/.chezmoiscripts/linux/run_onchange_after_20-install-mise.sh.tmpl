@@ -7,7 +7,7 @@ if ! dnf copr list | grep -q jdxcode/mise; then
   sudo dnf copr enable -y jdxcode/mise
 fi
 sudo dnf install -y mise
-eval "$(mise activate bash)"
+eval "$(mise activate bash --shims)"
 
 {{ if .personal -}}
 {{- if env "GH_ACCESS_TOKEN" -}}

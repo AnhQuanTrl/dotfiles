@@ -5,7 +5,7 @@
 set -eufo pipefail
 
 brew install mise
-eval "$(mise activate bash)"
+eval "$(mise activate bash --shims)"
 
 {{ if .personal -}}
 {{- if env "GH_ACCESS_TOKEN" -}}
